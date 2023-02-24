@@ -156,7 +156,7 @@ signaturehtml += "<link href=\"/resources/css/game-records.css\" rel=\"styleshee
 signaturehtml += "<p>This is a record of every game I've played since 2006 or so. Each game has a rating out of 5, "
 signaturehtml += "a rough estimate of total play time, and number of playthroughs (if more than one). Games that "
 signaturehtml += "have been 100% completed include a tag next to the title, as well as those where I've gotten its platinum "
-signaturehtml += "trophy on PSN. A vast majority of games were played on original hardware, but some of the older titles"
+signaturehtml += "trophy on PSN. A vast majority of games were played on original hardware, but some of the older titles "
 signaturehtml += "were emulated on PC.</p>\n"
 listinghtml = "<h2>All Games Played</h2>\n<div class=\"gamecard-container flex\">\n" + get_quicknav_anchor("#") + "\n"
 
