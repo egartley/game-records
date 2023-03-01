@@ -4,7 +4,7 @@ import math
 
 
 class Game:
-    def __init__(self, title, platform, rating, iconid, hundo, plat, year, hours, playthroughs):
+    def __init__(self, title, platform, rating, iconid, hundo, plat, year, hours, playthroughs, dlc):
         self.title = title
         self.platform = platform
         self.rating = rating
@@ -14,6 +14,7 @@ class Game:
         self.year = year
         self.hours = hours
         self.playthroughs = playthroughs
+        self.dlc = dlc
 
 
 def get_quicknav_html():
@@ -33,11 +34,11 @@ def get_rating_html(rating):
     fullstars = rating // 1
     hashalf = not rating // 1 == rating
     empties = 5 - math.ceil(rating)
-    content = "<img src=\"/resources/gif/star-filled.gif\">" * int(fullstars)
+    content = "<img src=\"/resources/png/sf.png\">" * int(fullstars)
     if hashalf:
-        content += "<img src=\"/resources/gif/star-half.gif\">"
+        content += "<img src=\"/resources/png/sh.png\">"
     if empties > 0:
-        content += "<img src=\"/resources/gif/star-empty.gif\">" * int(empties)
+        content += "<img src=\"/resources/png/se.png\">" * int(empties)
     end = "</span>"
     return start + content + end
 
@@ -69,6 +70,8 @@ def get_listing_html(game):
     content += get_rating_html(game.rating) + "\n"
     content += "</div>\n</div>\n"
     content += "<span class=\"gamecard-title\">" + game.title
+    if game.dlc:
+        content += " <img id=\"dlc\" alt=\"dlc\" src=\"/resources/png/dlc.png\">"
     if game.hundo:
         content += " <img id=\"100\" alt=\"100\" src=\"/resources/png/100.png\">"
     if game.plat:
@@ -175,7 +178,8 @@ stat_completion = [["100% Complete", 0], ["Platinum Trophy", 0]]
 with open("games.csv", mode="r") as gamescsv:   
   file = csv.reader(gamescsv)
   for gl in file:
-      game = Game(str(gl[0]), str(gl[3]), float(gl[5]), str(gl[8]), int(gl[6]) == 1, int(gl[7]) == 1, str(gl[2]), int(gl[9]), int(gl[10]))
+      game = Game(str(gl[0]), str(gl[3]), float(gl[5]), str(gl[8]), int(gl[6]) == 1,
+                  int(gl[7]) == 1, str(gl[2]), int(gl[9]), int(gl[10]), str(gl[11]) == "-1")
       game_list.append(game)
 
 # sort alphabetically by game title
@@ -222,7 +226,8 @@ iconcss += "div.gamecard-inner{justify-content:center;margin-left:8px}"
 iconcss += "div.gamecard,div.gamecard-inner{flex-direction:column}"
 iconcss += "div.gamecard-outer,span.gamecard-rating{flex-direction:row}a.qn-link{margin-right:10px;font-size:18px}"
 iconcss += "div.stat-container{display:flex;flex-direction:row}div.stat{margin-right:28px}"
-iconcss += "@media screen and (max-width:1072px){div.stat-container{flex-direction:column}}"
+iconcss += "span.gamecard-rating>img{width:16px;height:16px}"
+iconcss += "@media screen and (max-width:1072px){div.stat-container{flex-direction:column}}\n"
 for game in game_list:
     iconcss += get_icon_css(game.iconid)
 
