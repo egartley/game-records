@@ -129,5 +129,5 @@ dmypy.json
 .pyre/
 
 game-records.html
-game-records.css
+game-records-icons.css
 *.bat
